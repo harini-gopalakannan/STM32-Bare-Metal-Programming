@@ -1,0 +1,2 @@
+C:/Users/harini gopalakannan/OneDrive/文件/stm32_document_workspace/chip_headers/CMSIS/Include/core_cm4.h:1688:22:__NVIC_EnableIRQ	16	static
+../Src/exti.c:8:6:pa0_exti_init	8	static,ignoring_inline_asm

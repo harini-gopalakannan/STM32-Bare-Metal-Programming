@@ -1,0 +1,28 @@
+12:00:22 **** Build of configuration Debug for project 14_inputcapture ****
+make -j12 all 
+arm-none-eabi-size  14_inputcapture.elf 
+   text	   data	    bss	    dec	    hex	filename
+    956	      0	   1568	   2524	    9dc	14_inputcapture.elf
+Finished building: default.size.stdout
+ 
+12:00:34 **** Incremental Build of configuration Debug for project 14_inputcapture ****
+make -j12 all 
+arm-none-eabi-size  14_inputcapture.elf 
+   text	   data	    bss	    dec	    hex	filename
+    956	      0	   1568	   2524	    9dc	14_inputcapture.elf
+Finished building: default.size.stdout
+ 
+12:02:55 **** Incremental Build of configuration Debug for project 14_inputcapture ****
+make -j12 all 
+arm-none-eabi-size  14_inputcapture.elf 
+   text	   data	    bss	    dec	    hex	filename
+    956	      0	   1568	   2524	    9dc	14_inputcapture.elf
+Finished building: default.size.stdout
+ 
+12:10:49 **** Build of configuration Debug for project 17_adc_interrupt ****
+make -j12 all 
+arm-none-eabi-size  17_adc_interrupt.elf 
+   text	   data	    bss	    dec	    hex	filename
+   5448	     92	   1908	   7448	   1d18	17_adc_interrupt.elf
+Finished building: default.size.stdout
+ 

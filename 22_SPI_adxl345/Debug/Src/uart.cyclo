@@ -1,0 +1,10 @@
+C:/Users/harini gopalakannan/OneDrive/文件/stm32_document_workspace/chip_headers/CMSIS/Include/core_cm4.h:1688:22:__NVIC_EnableIRQ	2
+../Src/uart.c:38:5:__io_putchar	1
+../Src/uart.c:43:6:dma1_stream6_init	2
+../Src/uart.c:86:6:uart2_rxtx_init	1
+../Src/uart.c:127:6:uart2_rx_interrupt_init	1
+../Src/uart.c:172:6:uart2_tx_init	1
+../Src/uart.c:202:6:uart2_read	2
+../Src/uart.c:209:6:uart2_write	2
+../Src/uart.c:218:13:uart_set_baudrate	1
+../Src/uart.c:222:17:compute_uart_bd	1

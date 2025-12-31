@@ -1,0 +1,105 @@
+#include "stm32f4xx.h"
+#include "adc.h"
+
+#define ADC1EN (1U<<8)
+#define ADC_CH1 (1U<<0)
+#define GPIOAEN (1U<<0)
+#define ADC_SEQ_LEN_1 0x00
+#define CR2_ADON (1U<<0)
+#define CR2_SWSTART (1U<<30)
+#define SR_EOC (1U<<1)
+
+/*---------- DMA2 CHANNEL 0 STREAM 0 --------------------*/
+#define DMA2EN (1U<<22)
+#define DMA_S0_EN (1U<<0)
+#define CHSEL0_MASK (7U<<25)
+#define DMA_MEM_INC (1U<<10)
+#define DMA_DIR_PERIPH_TO_MEM_MASK (3U<<6)
+#define DMA_CR_TCIE (1U<<4)
+
+#define ADC_DMA_EN (1U<<8)
+
+/*----------------------------------------*/
+
+void dma2_stream0_init(uint32_t src, uint32_t dst, uint32_t len)
+{
+	/*enable clock access to dma - connect to ahb1*/
+	RCC->AHB1ENR |= DMA2EN;
+
+	/*disable dma2 stream0*/
+	DMA2_Stream0->CR &=~ DMA_S0_EN;
+
+	/*wait until DMA2 stream0 is disabled*/
+	while (DMA2_Stream0->CR & DMA_S0_EN){};
+
+	/*clear all interrupt flags of stream0*/
+	DMA2->LIFCR |= (1U<<0);
+	DMA2->LIFCR |= (1U<<2);
+	DMA2->LIFCR |= (1U<<3);
+	DMA2->LIFCR |= (1U<<4);
+	DMA2->LIFCR |= (1U<<5);
+
+	/*set the destination buffer*/
+	DMA2_Stream0->PAR = src;
+
+	/*set the source buffer*/
+	DMA2_Stream0->M0AR = dst;
+
+	/*set the length*/
+	DMA2_Stream0->NDTR = len;
+
+	/*SELECT STREAM0 AND CHANNEL 0*/
+	DMA2_Stream0->CR &=~(CHSEL0_MASK);
+
+	/*enable memory to increment*/
+	DMA2_Stream0->CR |= DMA_MEM_INC;
+
+	/*configure the transfer direction (RX) - here, data moving from PERIPHERAL TO MEMORY*/
+	DMA2_Stream0->CR &=~(DMA_DIR_PERIPH_TO_MEM_MASK);
+
+	/*ENABLE DMA TX COMPLETE INTERRUPT*/
+	DMA2_Stream0->CR |= DMA_CR_TCIE;
+
+	/*enable direct mode, disable FIFO*/
+	DMA2_Stream0->FCR = 0;
+
+	/*ENABLE DMA2 STREAM0*/
+	DMA2_Stream0->CR |= DMA_S0_EN;
+
+	/*ENABLE ADC1 DMA*/
+	ADC1->CR2 |= ADC_DMA_EN;
+
+	NVIC_EnableIRQ(DMA2_Stream0_IRQn);
+}
+
+void pa1_adc_init(void){
+	/**Configure the ADC GPIO pin****/
+	/*Enable clock access to gpioA*/
+	RCC->AHB1ENR|=GPIOAEN;
+	/*Set the mode of PA1 to analog*/
+	GPIOA->MODER |=(1U<<2);
+	GPIOA->MODER |=(1U<<3);
+	/*Configure the ADC module*/
+	/*Enable clock acces to ADC*/
+	RCC->APB2ENR |= ADC1EN;
+	/*Configure adc parameters*/
+	/*CONVERSION seqn start*/
+	ADC1->SQR3 = ADC_CH1;
+	/*COnversion seqn length*/
+	ADC1->SQR1 = ADC_SEQ_LEN_1;
+	/*Enable ADC module*/
+	ADC1->CR2 |= CR2_ADON;
+}
+
+void start_conversion(void){
+	/*Start conversion*/
+	ADC1->CR2 |= CR2_SWSTART;
+}
+
+uint32_t adc_read(void){
+	/*wait for conversion to complete */
+	while (!(ADC1->SR & SR_EOC)){}
+	/*read converted result*/
+	return (ADC1->DR);
+}
+

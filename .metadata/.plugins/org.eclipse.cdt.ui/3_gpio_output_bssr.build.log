@@ -1,0 +1,17 @@
+18:31:13 **** Incremental Build of configuration Debug for project 3_gpio_output_bssr ****
+make -j12 all 
+arm-none-eabi-gcc "../Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F411CEUx -DSTM32F411xE -c -I../Inc -I"C:/Users/harini gopalakannan/OneDrive/文件/stm32_document_workspace/chip_headers/CMSIS/Device/ST/STM32F4xx/Include" -I"C:/Users/harini gopalakannan/OneDrive/文件/stm32_document_workspace/chip_headers/CMSIS/Include" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/main.d" -MT"Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/main.o"
+arm-none-eabi-gcc -o "3_gpio_output_bssr.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\harini gopalakannan\OneDrive\文件\stm32_document_workspace\3_gpio_output_bssr\STM32F411CEUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="3_gpio_output_bssr.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: 3_gpio_output_bssr.elf
+ 
+arm-none-eabi-size  3_gpio_output_bssr.elf 
+arm-none-eabi-objdump -h -S 3_gpio_output_bssr.elf  > "3_gpio_output_bssr.list"
+   text	   data	    bss	    dec	    hex	filename
+    772	      0	   1568	   2340	    924	3_gpio_output_bssr.elf
+Finished building: default.size.stdout
+ 
+Finished building: 3_gpio_output_bssr.list
+ 
+
+18:31:14 Build Finished. 0 errors, 0 warnings. (took 1s.709ms)
+

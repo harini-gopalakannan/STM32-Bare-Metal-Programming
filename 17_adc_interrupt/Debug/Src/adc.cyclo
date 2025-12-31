@@ -1,0 +1,5 @@
+C:/Users/harini gopalakannan/OneDrive/文件/stm32_document_workspace/chip_headers/CMSIS/Include/core_cm4.h:1688:22:__NVIC_EnableIRQ	2
+../Src/adc.c:14:6:pa1_adc_interrupt_init	1
+../Src/adc.c:40:6:pa1_adc_init	1
+../Src/adc.c:59:6:start_conversion	1
+../Src/adc.c:66:10:adc_read	2

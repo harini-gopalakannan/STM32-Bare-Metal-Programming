@@ -1,0 +1,55 @@
+#include "stm32f4xx.h"
+#include <stdint.h>
+#include <stdio.h>
+#include "adc.h"
+//FOLLOWING CODE HAS BEEN WRITTE FOR STM32F411CEU6
+#include "uart.h"
+#include "systick.h"
+#include "tim.h"
+
+
+uint32_t data;
+static void tim2_adc_callback(void);
+volatile uint8_t dma_done = 0;
+
+
+int main(void){
+	uart2_tx_init();
+	pa1_adc_init();
+	tim2_100hz_interrupt_init();
+	while(1){
+		if (dma_done){
+			printf("Transfer complete \r\n");
+			dma_done=0;
+		}
+	}
+}
+
+static void tim2_adc_callback(void)
+{
+	start_conversion();
+	/*wait for conversion to complete */
+	while (!(ADC1->SR & SR_EOC)){}
+
+	dma2_stream0_init((uint32_t) &ADC1->DR , (uint32_t) data, 31);
+}
+
+void TIM2_IRQHandler(void)
+{
+	/*clear update interrupt flag*/
+	TIM2->SR &=~SR_UIF;
+
+	//Read ADC value on GPIO pin
+	tim2_adc_callback();
+}
+
+void DMA2_Stream0_IRQHandler(void)
+{
+	/*CHECK FOR TRASNFER COMPLETE INTERRUPT*/
+	if (DMA2->LISR & LISR_TCIF0){
+		/*CLEAR FLAG*/
+		DMA2->LIFCR |= LIFCR_CTCIF0;
+		//SEND RESULT TO UART
+		dma_done=1;
+	}
+}

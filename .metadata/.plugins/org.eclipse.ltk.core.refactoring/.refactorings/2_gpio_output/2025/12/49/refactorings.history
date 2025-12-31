@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;2_gpio_output/2_gpio_output Debug.cfg&apos; to &apos;2_gpio_output_Debug.cfg&apos;" description="Rename resource &apos;2_gpio_output Debug.cfg&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="2_gpio_output Debug.cfg" name="2_gpio_output_Debug.cfg" stamp="1764998225684" updateReferences="true"/>
+</session>

@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;3_gpio_output_driver&apos; to &apos;3_gpio_output_bssr&apos;" description="Rename resource &apos;3_gpio_output_driver&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/3_gpio_output_driver" name="3_gpio_output_bssr" stamp="1763816082032" updateReferences="true"/>&#x0A;<refactoring comment="Rename resource &apos;3_gpio_output_bssr&apos; to &apos;3_gpio_output_bsrr&apos;" description="Rename resource &apos;3_gpio_output_bssr&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/3_gpio_output_bssr" name="3_gpio_output_bsrr" stamp="1763816489370" updateReferences="true"/>
+</session>

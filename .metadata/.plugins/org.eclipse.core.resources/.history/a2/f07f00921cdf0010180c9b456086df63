@@ -1,0 +1,41 @@
+#include "stm32f4xx.h"
+#include <stdint.h>
+#include <stdio.h>
+#include "adc.h"
+//FOLLOWING CODE HAS BEEN WRITTE FOR STM32F411CEU6
+#include "uart.h"
+#include "systick.h"
+#include "tim.h"
+
+static void tim2_adc_callback(void);
+
+extern volatile uint16_t data;
+volatile uint16_t adc_latest;
+volatile uint8_t dma_done = 0;
+
+
+int main(void){
+	uart2_tx_init();
+	pa1_adc_init();
+	dma2_stream0_init();
+	tim2_100hz_interrupt_init();
+	while(1){
+		if (dma_done){
+			dma_done=0;
+			printf("ADC = %u\r\n", adc_latest);
+		}
+	}
+}
+
+
+void DMA2_Stream0_IRQHandler(void)
+{
+	/*CHECK FOR TRASNFER COMPLETE INTERRUPT*/
+	if (DMA2->LISR & LISR_TCIF0){
+		/*CLEAR FLAG*/
+		DMA2->LIFCR |= LIFCR_CTCIF0;
+		//SEND RESULT TO UART
+		adc_latest=data;
+		dma_done=1;
+	}
+}
